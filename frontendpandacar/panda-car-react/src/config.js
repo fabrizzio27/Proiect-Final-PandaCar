@@ -6,18 +6,16 @@ const config = {
   },
   // Production API URL
   production: {
-    API_BASE_URL:
-      "https://proiect-final-pandacar-production.up.railway.app/api",
+    API_BASE_URL: "https://proiect-final-pandacar-production.up.railway.app/api",
   },
 };
 
-// Get the current environment - default to production for deployed apps
-const environment =
-  process.env.NODE_ENV === "development" ? "development" : "production";
+// Force production mode for deployed apps
+const environment = "production";
 
 // Debug log
-console.log('Environment:', environment);
-console.log('API_BASE_URL:', config[environment].API_BASE_URL);
+console.log("Environment:", environment);
+console.log("API_BASE_URL:", config[environment].API_BASE_URL);
 
 // Export the appropriate configuration
 export default config[environment];
