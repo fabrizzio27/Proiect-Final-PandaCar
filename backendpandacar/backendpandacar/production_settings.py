@@ -16,7 +16,7 @@ ALLOWED_HOSTS = ['*']
 
 # CORS settings for production
 CORS_ALLOWED_ORIGINS = [
-    'https://proiect-final-panda-car-mngj-en58w9kxn-fabrizzio27s-projects.vercel.app',
+    'https://proiect-final-panda-car-mngj.vercel.app',
 ]
 
 # Update CORS settings for production
@@ -55,7 +55,7 @@ SIMPLE_JWT.update({
 
 # CSRF settings for production
 CSRF_TRUSTED_ORIGINS = [
-    "https://proiect-final-panda-car-mngj-en58w9kxn-fabrizzio27s-projects.vercel.app",
+    "https://proiect-final-panda-car-mngj.vercel.app",
 ]
 
 # Logging configuration
