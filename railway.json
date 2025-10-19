@@ -4,10 +4,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "cd backendpandacar && python manage.py migrate && gunicorn backendpandacar.wsgi:application --bind 0.0.0.0:$PORT",
-    "healthcheckPath": "/api/",
-    "healthcheckTimeout": 100,
-    "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 10
+    "startCommand": "cd backendpandacar && python manage.py migrate && gunicorn backendpandacar.wsgi:application --bind 0.0.0.0:$PORT"
   }
 }
