@@ -6,7 +6,8 @@ const config = {
   },
   // Production API URL (replace with your actual Railway URL)
   production: {
-    API_BASE_URL: "https://proiect-final-pandacar-production.up.railway.app/api",
+    API_BASE_URL:
+      "https://proiect-final-pandacar-production.up.railway.app/api",
   },
 };
 
