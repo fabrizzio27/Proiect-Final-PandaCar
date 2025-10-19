@@ -16,75 +16,69 @@ from api.models import Car, CarAvailability
 cars_data = [
     {
         'car_name': 'BMW X5',
-        'brand': 'BMW',
-        'model': 'X5',
-        'year': 2023,
+        'brand_name': 'BMW',
         'price_per_day': 150,
-        'seats': 5,
-        'fuel_type': 'Gasoline',
-        'transmission': 'Automatic',
-        'photo_url': '/media/car_photos/BMW_X5.jpg',
-        'description': 'Luxury SUV with premium features'
+        'number_of_seats': 5,
+        'fuel_type': 'Petrol',
+        'photo_name': 'BMW_X5.jpg',
+        'color': 'Black',
+        'horse_power': 300,
+        'engine_capacity': 3.0
     },
     {
         'car_name': 'Audi Q7',
-        'brand': 'Audi',
-        'model': 'Q7',
-        'year': 2023,
+        'brand_name': 'Audi',
         'price_per_day': 160,
-        'seats': 7,
-        'fuel_type': 'Gasoline',
-        'transmission': 'Automatic',
-        'photo_url': '/media/car_photos/Audi_Q7.jpg',
-        'description': 'Premium SUV with advanced technology'
+        'number_of_seats': 7,
+        'fuel_type': 'Petrol',
+        'photo_name': 'Audi_Q7.jpg',
+        'color': 'White',
+        'horse_power': 340,
+        'engine_capacity': 3.0
     },
     {
         'car_name': 'Mercedes S-Class',
-        'brand': 'Mercedes',
-        'model': 'S-Class',
-        'year': 2023,
+        'brand_name': 'Mercedes',
         'price_per_day': 200,
-        'seats': 5,
-        'fuel_type': 'Gasoline',
-        'transmission': 'Automatic',
-        'photo_url': '/media/car_photos/Mercedes_Benz_S-Class.jpg',
-        'description': 'Ultra-luxury sedan with cutting-edge features'
+        'number_of_seats': 5,
+        'fuel_type': 'Petrol',
+        'photo_name': 'Mercedes_Benz_S-Class.jpg',
+        'color': 'Silver',
+        'horse_power': 450,
+        'engine_capacity': 4.0
     },
     {
         'car_name': 'Tesla Model 3',
-        'brand': 'Tesla',
-        'model': 'Model 3',
-        'year': 2023,
+        'brand_name': 'Tesla',
         'price_per_day': 120,
-        'seats': 5,
+        'number_of_seats': 5,
         'fuel_type': 'Electric',
-        'transmission': 'Automatic',
-        'photo_url': '/media/car_photos/Tesla_Model_3.jpg',
-        'description': 'Electric sedan with autopilot features'
+        'photo_name': 'Tesla_Model_3.jpg',
+        'color': 'Blue',
+        'horse_power': 283,
+        'engine_capacity': 0.0
     },
     {
         'car_name': 'Honda Civic',
-        'brand': 'Honda',
-        'model': 'Civic',
-        'year': 2023,
+        'brand_name': 'Honda',
         'price_per_day': 80,
-        'seats': 5,
-        'fuel_type': 'Gasoline',
-        'transmission': 'Manual',
-        'photo_url': '/media/car_photos/Honda_Civic.jpg',
-        'description': 'Reliable compact car with great fuel economy'
+        'number_of_seats': 5,
+        'fuel_type': 'Petrol',
+        'photo_name': 'Honda_Civic.jpg',
+        'color': 'Red',
+        'horse_power': 158,
+        'engine_capacity': 1.5
     },
     {
         'car_name': 'Toyota Yaris',
-        'brand': 'Toyota',
-        'model': 'Yaris',
-        'year': 2023,
+        'brand_name': 'Toyota',
         'price_per_day': 70,
-        'seats': 5,
-        'fuel_type': 'Gasoline',
-        'transmission': 'Manual',
-        'photo_url': '/media/car_photos/Toyota_Yaris.jpg',
-        'description': 'Compact and efficient city car'
+        'number_of_seats': 5,
+        'fuel_type': 'Petrol',
+        'photo_name': 'Toyota_Yaris.jpg',
+        'color': 'White',
+        'horse_power': 106,
+        'engine_capacity': 1.0
     }
 ]
 
@@ -102,7 +96,10 @@ for car_data in cars_data:
     # Create availability for each car
     availability, created = CarAvailability.objects.get_or_create(
         car=car,
-        defaults={'is_available': True}
+        defaults={
+            'start_date': '2024-01-01',
+            'end_date': '2024-12-31'
+        }
     )
     if created:
         print(f"Created availability for: {car.car_name}")
