@@ -15,5 +15,9 @@ const config = {
 const environment =
   process.env.NODE_ENV === "development" ? "development" : "production";
 
+// Debug log
+console.log('Environment:', environment);
+console.log('API_BASE_URL:', config[environment].API_BASE_URL);
+
 // Export the appropriate configuration
 export default config[environment];
