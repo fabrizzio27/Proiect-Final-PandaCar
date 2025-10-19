@@ -40,18 +40,18 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Security settings for production
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = False  # Temporarily disable for debugging
+SESSION_COOKIE_SECURE = False  # Temporarily disable for debugging
+CSRF_COOKIE_SECURE = False  # Temporarily disable for debugging
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # Update JWT settings for production
 SIMPLE_JWT.update({
     "AUTH_COOKIE_DOMAIN": None,  # Will be set by the hosting platform
-    "AUTH_COOKIE_SECURE": True,  # HTTPS only in production
+    "AUTH_COOKIE_SECURE": False,  # Temporarily disable for debugging
     "AUTH_COOKIE_REFRESH_TOKEN_DOMAIN": None,
-    "AUTH_COOKIE_REFRESH_TOKEN_SECURE": True,
+    "AUTH_COOKIE_REFRESH_TOKEN_SECURE": False,  # Temporarily disable for debugging
 })
 
 # CSRF settings for production
