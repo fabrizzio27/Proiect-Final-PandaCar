@@ -3,15 +3,22 @@ import "./LoginForm.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import pandaIcon from "../Assets/panda4.png"; // Import your icon image
-import config from "../../config";
+import { useAuth } from "../../contexts/AuthContext";
 
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -66,13 +73,21 @@ const LoginForm = () => {
 
   const handleLoginUser = async (event) => {
     event.preventDefault();
+    setErrorMessage("");
+    setSuccessMessage("");
 
-    const userCredentials = {
-      email: email,
-      password: password,
-    };
-
-    fetchAPI(userCredentials);
+    const result = await login(email, password);
+    
+    if (result.success) {
+      setSuccessMessage("Login successful!");
+      if (result.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/home");
+      }
+    } else {
+      setErrorMessage(result.error || "Login failed!");
+    }
   };
 
   return (

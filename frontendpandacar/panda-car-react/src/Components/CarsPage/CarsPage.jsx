@@ -3,6 +3,7 @@ import Header from '../Header/Header';
 import Filters from '../Filters/Filters';
 import './CarsPage.css';
 import config from '../../config';
+import { useAuth } from '../../contexts/AuthContext';
 
 const CarsPage = () => {
     const [cars, setCars] = useState([]);
@@ -13,6 +14,7 @@ const CarsPage = () => {
     const [selectedCar, setSelectedCar] = useState(null); // New state for the selected car
     const [startDate, setStartDate] = useState(''); // State for start date
     const [endDate, setEndDate] = useState(''); // State for end date
+    const { isAuthenticated } = useAuth();
 
     // Fetch cars from the API
     const fetchCars = async () => {
@@ -56,16 +58,15 @@ const CarsPage = () => {
         try {
             console.log('Adding to cart:', car.car_name);
             console.log('API URL:', `${config.API_BASE_URL}/cart/add/${car.id}/`);
+            console.log('Is authenticated:', isAuthenticated);
+            console.log('User agent:', navigator.userAgent);
             
-            // Check if user is authenticated
-            const authCheck = await fetch(`${config.API_BASE_URL}/myaccount/`, {
-                credentials: 'include',
-            });
-            
-            if (!authCheck.ok) {
+            if (!isAuthenticated) {
                 alert('Please log in first to add items to cart');
                 return;
             }
+            
+            console.log('Making request to:', `${config.API_BASE_URL}/cart/add/${car.id}/`);
             
             const response = await fetch(`${config.API_BASE_URL}/cart/add/${car.id}/`, {
                 method: 'POST',
@@ -76,6 +77,16 @@ const CarsPage = () => {
             });
 
             console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
+            
+            if (!response.ok) {
+                console.error('Response not OK:', response.status, response.statusText);
+                const errorText = await response.text();
+                console.error('Error response:', errorText);
+                alert(`Server error: ${response.status} - ${response.statusText}`);
+                return;
+            }
+            
             const data = await response.json();
             console.log('Response data:', data);
 
@@ -91,7 +102,9 @@ const CarsPage = () => {
             }
         } catch (error) {
             console.error('Error in handleAddToCart:', error);
-            alert('Network error. Please check your connection.');
+            console.error('Error name:', error.name);
+            console.error('Error message:', error.message);
+            alert(`Network error: ${error.message}. Please check your connection.`);
         }
     };
 
@@ -99,16 +112,15 @@ const CarsPage = () => {
         try {
             console.log('Adding to favorites:', car.car_name);
             console.log('API URL:', `${config.API_BASE_URL}/favorites/add/${car.id}/`);
+            console.log('Is authenticated:', isAuthenticated);
+            console.log('User agent:', navigator.userAgent);
             
-            // Check if user is authenticated
-            const authCheck = await fetch(`${config.API_BASE_URL}/myaccount/`, {
-                credentials: 'include',
-            });
-            
-            if (!authCheck.ok) {
+            if (!isAuthenticated) {
                 alert('Please log in first to add items to favorites');
                 return;
             }
+            
+            console.log('Making request to:', `${config.API_BASE_URL}/favorites/add/${car.id}/`);
             
             const response = await fetch(`${config.API_BASE_URL}/favorites/add/${car.id}/`, {
                 method: 'POST',
@@ -119,6 +131,16 @@ const CarsPage = () => {
             });
 
             console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
+            
+            if (!response.ok) {
+                console.error('Response not OK:', response.status, response.statusText);
+                const errorText = await response.text();
+                console.error('Error response:', errorText);
+                alert(`Server error: ${response.status} - ${response.statusText}`);
+                return;
+            }
+            
             const data = await response.json();
             console.log('Response data:', data);
 
@@ -134,7 +156,9 @@ const CarsPage = () => {
             }
         } catch (error) {
             console.error('Error in handleAddToFavorites:', error);
-            alert('Network error. Please check your connection.');
+            console.error('Error name:', error.name);
+            console.error('Error message:', error.message);
+            alert(`Network error: ${error.message}. Please check your connection.`);
         }
     };
 
