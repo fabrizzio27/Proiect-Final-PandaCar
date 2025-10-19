@@ -141,7 +141,7 @@ const Cart = () => {
                                 <div key={car.id} className="Cart-car-card">
                                     <h3>{car.car_name} ({car.brand_name})</h3>
                                     <img
-                                        src={`${config.API_BASE_URL.replace('/api', '')}${car.photo_url}?t=${new Date().getTime()}`}
+                                        src={car.photo_url.startsWith('http') ? car.photo_url : `${config.API_BASE_URL.replace('/api', '')}${car.photo_url}`}
                                         alt={`${car.car_name} photo`}
                                     />
                                     <p>Price per day: ${car.price_per_day}</p>

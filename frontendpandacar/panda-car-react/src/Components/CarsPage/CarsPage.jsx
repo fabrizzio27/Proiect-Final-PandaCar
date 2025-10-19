@@ -126,7 +126,7 @@ const CarsPage = () => {
                         <div className="car-details">
                             <button className="close-button" onClick={handleCloseDetails}>X</button>
                             <h1>{selectedCar.car_name} ({selectedCar.brand_name})</h1>
-                            <img src={`${config.API_BASE_URL.replace('/api', '')}${selectedCar.photo_url}?t=${new Date().getTime()}`} alt={`${selectedCar.car_name} photo`} />
+                            <img src={selectedCar.photo_url.startsWith('http') ? selectedCar.photo_url : `${config.API_BASE_URL.replace('/api', '')}${selectedCar.photo_url}`} alt={`${selectedCar.car_name} photo`} />
                             <p>Price per day: ${selectedCar.price_per_day}</p>
                             <p>Fuel type: {selectedCar.fuel_type}</p>
                             <p>Seats: {selectedCar.number_of_seats}</p>
@@ -164,7 +164,7 @@ const CarsPage = () => {
                                     filteredCars.map((car) => (
                                         <div key={car.id} className="car-card">
                                             <h3>{car.car_name} ({car.brand_name})</h3>
-                                            <img src={`${config.API_BASE_URL.replace('/api', '')}${car.photo_url}?t=${new Date().getTime()}`} alt={`${car.car_name} photo`} />
+                                            <img src={car.photo_url.startsWith('http') ? car.photo_url : `${config.API_BASE_URL.replace('/api', '')}${car.photo_url}`} alt={`${car.car_name} photo`} />
                                             <p>Price per day: ${car.price_per_day}</p>
                                             <p>Fuel type: {car.fuel_type}</p>
                                             <p>Seats: {car.number_of_seats}</p>

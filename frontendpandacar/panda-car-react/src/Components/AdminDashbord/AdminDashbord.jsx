@@ -666,7 +666,7 @@ const AdminDashbord = () => {
                                             ) : (
                                                 <div>
                                                     <h3>{car.car_name} ({car.brand_name})</h3>
-                                                    <img src={`${config.API_BASE_URL.replace('/api', '')}${car.photo_url}`} alt={`${car.car_name} photo`} />
+                                                    <img src={car.photo_url.startsWith('http') ? car.photo_url : `${config.API_BASE_URL.replace('/api', '')}${car.photo_url}`} alt={`${car.car_name} photo`} />
                                                     <p>Id: {car.id}</p>
                                                     <p>Image: {car.photo_name}</p>
                                                     <p>Price per day: ${car.price_per_day}</p>
