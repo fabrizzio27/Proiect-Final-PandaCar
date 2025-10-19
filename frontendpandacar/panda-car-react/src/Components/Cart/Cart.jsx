@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
 import Header from '../Header/Header';
 import './Cart.css';
+import config from '../../config';
 
 const Cart = () => {
     const [cars, setCars] = useState([]);  // Cars fetched from API
@@ -14,7 +15,7 @@ const Cart = () => {
         setError(null);
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/cart/', {
+            const response = await fetch(`${config.API_BASE_URL}/cart/`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +55,7 @@ const Cart = () => {
     const handleRemoveFromCart = async (car) => {
         console.log('Removing car:', car);
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/cart/remove/${car.id}/`, {
+            const response = await fetch(`${config.API_BASE_URL}/cart/remove/${car.id}/`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -140,7 +141,7 @@ const Cart = () => {
                                 <div key={car.id} className="Cart-car-card">
                                     <h3>{car.car_name} ({car.brand_name})</h3>
                                     <img
-                                        src={`http://127.0.0.1:8000${car.photo_url}?t=${new Date().getTime()}`}
+                                        src={`${config.API_BASE_URL.replace('/api', '')}${car.photo_url}?t=${new Date().getTime()}`}
                                         alt={`${car.car_name} photo`}
                                     />
                                     <p>Price per day: ${car.price_per_day}</p>

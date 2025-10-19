@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import './Account.css';
 import pandaProfile from '../Assets/panda5.png';
+import config from '../../config';
 
 
 const Account = () => {
@@ -24,7 +25,7 @@ const Account = () => {
     const fetchUserData = async () => {
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/myaccount/`, {
+            const response = await fetch(`${config.API_BASE_URL}/myaccount/`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -50,7 +51,7 @@ const Account = () => {
     // Handle the logout action
     const handleLogout = async () => {
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/logout/", {
+            const response = await fetch(`${config.API_BASE_URL}/logout/`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

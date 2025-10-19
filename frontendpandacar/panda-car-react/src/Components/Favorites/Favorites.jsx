@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import Filters from '../Filters/Filters';
 import './Favorites.css';
+import config from '../../config';
 
 const Favorites = () => {
     const [cars, setCars] = useState([]);  // Cars fetched from API
@@ -17,7 +18,7 @@ const Favorites = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/favorites/', {
+            const response = await fetch(`${config.API_BASE_URL}/favorites/`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -65,7 +66,7 @@ const Favorites = () => {
     const handleRemoveFromFav = async (car) => {
         console.log('Removing car:', car);
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/favorites/remove/${car.id}/`, {
+            const response = await fetch(`${config.API_BASE_URL}/favorites/remove/${car.id}/`, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
@@ -105,7 +106,7 @@ const Favorites = () => {
 
     const handleAddToCart = async (car) => {
         try {
-            const checkResponse = await fetch(`http://127.0.0.1:8000/api/availabilities`, {
+            const checkResponse = await fetch(`${config.API_BASE_URL}/availabilities`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -147,7 +148,7 @@ const Favorites = () => {
                 return;
             }
 
-            const response = await fetch(`http://127.0.0.1:8000/api/cart/add/${car.id}/`, {
+            const response = await fetch(`${config.API_BASE_URL}/cart/add/${car.id}/`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -226,7 +227,7 @@ const Favorites = () => {
                             <button className="close-button" onClick={handleCloseDetails}>X</button>
                             <h1>{selectedCar.car_name} ({selectedCar.brand_name})</h1>
                             <img
-                                src={`http://127.0.0.1:8000${selectedCar.photo_url}?t=${new Date().getTime()}`}
+                                src={`${config.API_BASE_URL.replace('/api', '')}${selectedCar.photo_url}?t=${new Date().getTime()}`}
                                 alt={`${selectedCar.car_name} photo`}
                             />
                             <p>Price per day: ${selectedCar.price_per_day}</p>
@@ -265,7 +266,7 @@ const Favorites = () => {
                                         <div key={car.id} className="fav-car-card">
                                             <h3>{car.car_name} ({car.brand_name})</h3>
                                             <img
-                                                src={`http://127.0.0.1:8000${car.photo_url}?t=${new Date().getTime()}`}
+                                                src={`${config.API_BASE_URL.replace('/api', '')}${car.photo_url}?t=${new Date().getTime()}`}
                                                 alt={`${car.car_name} photo`}
                                             />
                                             <p>Price per day: ${car.price_per_day}</p>

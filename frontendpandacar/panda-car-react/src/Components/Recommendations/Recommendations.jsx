@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import Filters from '../Filters/Filters';
 import './Recommendations.css';
+import config from '../../config';
 
 const Recommendations = () => {
     
@@ -20,7 +21,7 @@ const Recommendations = () => {
 
         try {
             // Fetch and update recommendations via a single GET request
-            const response = await fetch('http://127.0.0.1:8000/api/recommended/', {
+            const response = await fetch(`${config.API_BASE_URL}/recommended/`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -65,7 +66,7 @@ const Recommendations = () => {
 
     const handleAddToFav = async (car) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/favorites/add/${car.id}/`, {
+            const response = await fetch(`${config.API_BASE_URL}/favorites/add/${car.id}/`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -106,7 +107,7 @@ const Recommendations = () => {
 
     const handleAddToCart = async (car) => {
         try {
-            const checkResponse = await fetch(`http://127.0.0.1:8000/api/availabilities`, {
+            const checkResponse = await fetch(`${config.API_BASE_URL}/availabilities`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -148,7 +149,7 @@ const Recommendations = () => {
                 return;
             }
 
-            const response = await fetch(`http://127.0.0.1:8000/api/cart/add/${car.id}/`, {
+            const response = await fetch(`${config.API_BASE_URL}/cart/add/${car.id}/`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -228,7 +229,7 @@ const Recommendations = () => {
                             <button className="close-button" onClick={handleCloseDetails}>X</button>
                             <h1>{selectedCar.car_name} ({selectedCar.brand_name})</h1>
                             <img
-                                src={`http://127.0.0.1:8000${selectedCar.photo_url}?t=${new Date().getTime()}`}
+                                src={`${config.API_BASE_URL.replace('/api', '')}${selectedCar.photo_url}?t=${new Date().getTime()}`}
                                 alt={`${selectedCar.car_name} photo`}
                             />
                             <p>Price per day: ${selectedCar.price_per_day}</p>
@@ -264,7 +265,7 @@ const Recommendations = () => {
                                     <div key={car.id} className="Recommendations-car-card">
                                         <h3>{car.car_name} ({car.brand_name})</h3>
                                             <img
-                                                src={`http://127.0.0.1:8000${car.photo_url}?t=${new Date().getTime()}`}
+                                                src={`${config.API_BASE_URL.replace('/api', '')}${car.photo_url}?t=${new Date().getTime()}`}
                                                 alt={`${car.car_name} photo`}
                                             />
                                             <p>Price per day: ${car.price_per_day}</p>
