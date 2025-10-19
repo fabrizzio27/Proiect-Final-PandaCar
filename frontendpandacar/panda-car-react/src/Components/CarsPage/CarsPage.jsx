@@ -54,6 +54,19 @@ const CarsPage = () => {
 
     const handleAddToCart = async (car) => {
         try {
+            console.log('Adding to cart:', car.car_name);
+            console.log('API URL:', `${config.API_BASE_URL}/cart/add/${car.id}/`);
+            
+            // Check if user is authenticated
+            const authCheck = await fetch(`${config.API_BASE_URL}/myaccount/`, {
+                credentials: 'include',
+            });
+            
+            if (!authCheck.ok) {
+                alert('Please log in first to add items to cart');
+                return;
+            }
+            
             const response = await fetch(`${config.API_BASE_URL}/cart/add/${car.id}/`, {
                 method: 'POST',
                 credentials: 'include',
@@ -62,22 +75,41 @@ const CarsPage = () => {
                 },
             });
 
+            console.log('Response status:', response.status);
             const data = await response.json();
+            console.log('Response data:', data);
 
             if (response.status === 201) {
+                alert(`${car.car_name} added to cart successfully!`);
                 console.log(`${car.car_name} added to cart`);
             } else if (response.status === 200 && data.message.includes("already")) {
+                alert(`${car.car_name} is already in your cart`);
                 console.log(`${car.car_name} is already in your cart`);
             } else {
+                alert(`Error: ${data.error || 'Failed to add to cart'}`);
                 console.error('Failed to add to cart');
             }
         } catch (error) {
             console.error('Error in handleAddToCart:', error);
+            alert('Network error. Please check your connection.');
         }
     };
 
     const handleAddToFavorites = async (car) => {
         try {
+            console.log('Adding to favorites:', car.car_name);
+            console.log('API URL:', `${config.API_BASE_URL}/favorites/add/${car.id}/`);
+            
+            // Check if user is authenticated
+            const authCheck = await fetch(`${config.API_BASE_URL}/myaccount/`, {
+                credentials: 'include',
+            });
+            
+            if (!authCheck.ok) {
+                alert('Please log in first to add items to favorites');
+                return;
+            }
+            
             const response = await fetch(`${config.API_BASE_URL}/favorites/add/${car.id}/`, {
                 method: 'POST',
                 credentials: 'include',
@@ -86,17 +118,23 @@ const CarsPage = () => {
                 },
             });
 
+            console.log('Response status:', response.status);
             const data = await response.json();
+            console.log('Response data:', data);
 
             if (response.status === 201) {
+                alert(`${car.car_name} added to favorites successfully!`);
                 console.log(`${car.car_name} added to favorites`);
             } else if (response.status === 200 && data.message.includes("already")) {
+                alert(`${car.car_name} is already in your favorites`);
                 console.log(`${car.car_name} is already in your favorites`);
             } else {
+                alert(`Error: ${data.error || 'Failed to add to favorites'}`);
                 console.error('Failed to add to favorites');
             }
         } catch (error) {
             console.error('Error in handleAddToFavorites:', error);
+            alert('Network error. Please check your connection.');
         }
     };
 
