@@ -20,7 +20,7 @@ urlpatterns = [
     path('cart/add/<int:car_id>/', add_to_cart, name='add_to_cart'),
     path('cart/remove/<int:car_id>/', remove_from_cart, name='remove_from_cart'),
     path('recommended/', recommended_cars, name='recommended_cars'),
-    path('images/<str:filename>/', serve_car_image, name='serve_car_image'),
+    path('images/<str:filename>', serve_car_image, name='serve_car_image'),
 
     path('login/',CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),  
     path('logout/',logout_user, name='logout_user')

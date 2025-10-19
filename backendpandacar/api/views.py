@@ -525,8 +525,15 @@ def serve_car_image(request, filename):
         # Construct the full path to the image
         image_path = os.path.join(settings.MEDIA_ROOT, 'car_photos', filename)
         
+        # Debug logging
+        logger.info(f"Attempting to serve image: {filename}")
+        logger.info(f"Image path: {image_path}")
+        logger.info(f"MEDIA_ROOT: {settings.MEDIA_ROOT}")
+        logger.info(f"File exists: {os.path.exists(image_path)}")
+        
         # Check if the file exists
         if not os.path.exists(image_path):
+            logger.error(f"Image not found: {image_path}")
             raise Http404("Image not found")
         
         # Read the image file
@@ -546,6 +553,7 @@ def serve_car_image(request, filename):
         # Return the image with appropriate headers
         response = HttpResponse(image_data, content_type=content_type)
         response['Cache-Control'] = 'public, max-age=3600'  # Cache for 1 hour
+        logger.info(f"Successfully served image: {filename}")
         return response
         
     except Exception as e:
