@@ -9,7 +9,7 @@ class CarSerializer(serializers.ModelSerializer):
         model = Car
         fields = '__all__'
     def get_photo_url(self, obj):
-        return f"{settings.MEDIA_URL}car_photos/{obj.photo_name}"
+        return f"/api/images/{obj.photo_name}"
 
 class UserSerializer(serializers.ModelSerializer):
     # exclude password from output

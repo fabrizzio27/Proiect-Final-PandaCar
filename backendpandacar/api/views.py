@@ -15,6 +15,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from .recommendations import generate_recommendations,generate_recommendations_others
 import logging
+from django.http import HttpResponse, Http404
+from django.conf import settings
+import os
 
 logger = logging.getLogger(__name__)
 #this is for login view
@@ -509,4 +512,43 @@ def recommended_cars(request):
             {"error": "An error occurred while generating recommendations."},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
+
+
+# Image serving endpoint
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def serve_car_image(request, filename):
+    """
+    Serve car images from the media directory
+    """
+    try:
+        # Construct the full path to the image
+        image_path = os.path.join(settings.MEDIA_ROOT, 'car_photos', filename)
+        
+        # Check if the file exists
+        if not os.path.exists(image_path):
+            raise Http404("Image not found")
+        
+        # Read the image file
+        with open(image_path, 'rb') as f:
+            image_data = f.read()
+        
+        # Determine content type based on file extension
+        if filename.lower().endswith('.jpg') or filename.lower().endswith('.jpeg'):
+            content_type = 'image/jpeg'
+        elif filename.lower().endswith('.png'):
+            content_type = 'image/png'
+        elif filename.lower().endswith('.gif'):
+            content_type = 'image/gif'
+        else:
+            content_type = 'application/octet-stream'
+        
+        # Return the image with appropriate headers
+        response = HttpResponse(image_data, content_type=content_type)
+        response['Cache-Control'] = 'public, max-age=3600'  # Cache for 1 hour
+        return response
+        
+    except Exception as e:
+        logger.error(f"Error serving image {filename}: {str(e)}")
+        raise Http404("Image not found")
     
