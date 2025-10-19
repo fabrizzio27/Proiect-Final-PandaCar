@@ -21,6 +21,7 @@ CORS_ALLOWED_ORIGINS = [
 
 # Update CORS settings for production
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = False  # Keep this False for security
 
 # Database - Use SQLite for now (can switch to PostgreSQL later)
 DATABASES = {

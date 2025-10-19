@@ -9,7 +9,16 @@ class CarSerializer(serializers.ModelSerializer):
         model = Car
         fields = '__all__'
     def get_photo_url(self, obj):
-        return f"/api/images/{obj.photo_name}"
+        # Use placeholder images for now - you can replace these with actual car images
+        car_images = {
+            'BMW_X5.jpg': 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400&h=300&fit=crop',
+            'Audi_Q7.jpg': 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&h=300&fit=crop',
+            'Mercedes_Benz_S-Class.jpg': 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=400&h=300&fit=crop',
+            'Tesla_Model_3.jpg': 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400&h=300&fit=crop',
+            'Honda_Civic.jpg': 'https://images.unsplash.com/photo-1549317336-206569e8475c?w=400&h=300&fit=crop',
+            'Toyota_Yaris.jpg': 'https://images.unsplash.com/photo-1549317336-206569e8475c?w=400&h=300&fit=crop',
+        }
+        return car_images.get(obj.photo_name, 'https://images.unsplash.com/photo-1549317336-206569e8475c?w=400&h=300&fit=crop')
 
 class UserSerializer(serializers.ModelSerializer):
     # exclude password from output

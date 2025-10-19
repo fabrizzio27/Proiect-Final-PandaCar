@@ -12,6 +12,10 @@ COPY . .
 # Set the Django settings module
 ENV DJANGO_SETTINGS_MODULE=backendpandacar.production_settings
 
+# Ensure media directory exists and has proper permissions
+RUN mkdir -p /app/backendpandacar/media/car_photos && \
+    chmod -R 755 /app/backendpandacar/media
+
 # Collect static files
 RUN cd backendpandacar && python manage.py collectstatic --noinput
 
