@@ -20,4 +20,4 @@ EXPOSE $PORT
 
 # Start the application
 WORKDIR /app/backendpandacar
-CMD python manage.py migrate && gunicorn backendpandacar.wsgi:application --bind 0.0.0.0:$PORT
+CMD python manage.py migrate && python populate_db.py && gunicorn backendpandacar.wsgi:application --bind 0.0.0.0:$PORT
