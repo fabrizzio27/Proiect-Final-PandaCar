@@ -22,15 +22,11 @@ CORS_ALLOWED_ORIGINS = [
 # Update CORS settings for production
 CORS_ALLOW_CREDENTIALS = True
 
-# Database - Use environment variables for production
+# Database - Use SQLite for now (can switch to PostgreSQL later)
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'pandacar'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
