@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import Filters from '../Filters/Filters';
 import './CarsPage.css';
+import config from '../../config';
 
 const CarsPage = () => {
     const [cars, setCars] = useState([]);
@@ -18,7 +19,7 @@ const CarsPage = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/cars/', {
+            const response = await fetch(`${config.API_BASE_URL}/cars/`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -53,7 +54,7 @@ const CarsPage = () => {
 
     const handleAddToCart = async (car) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/cart/add/${car.id}/`, {
+            const response = await fetch(`${config.API_BASE_URL}/cart/add/${car.id}/`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -77,7 +78,7 @@ const CarsPage = () => {
 
     const handleAddToFavorites = async (car) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/favorites/add/${car.id}/`, {
+            const response = await fetch(`${config.API_BASE_URL}/favorites/add/${car.id}/`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -125,7 +126,7 @@ const CarsPage = () => {
                         <div className="car-details">
                             <button className="close-button" onClick={handleCloseDetails}>X</button>
                             <h1>{selectedCar.car_name} ({selectedCar.brand_name})</h1>
-                            <img src={`http://127.0.0.1:8000${selectedCar.photo_url}?t=${new Date().getTime()}`} alt={`${selectedCar.car_name} photo`} />
+                            <img src={`${config.API_BASE_URL.replace('/api', '')}${selectedCar.photo_url}?t=${new Date().getTime()}`} alt={`${selectedCar.car_name} photo`} />
                             <p>Price per day: ${selectedCar.price_per_day}</p>
                             <p>Fuel type: {selectedCar.fuel_type}</p>
                             <p>Seats: {selectedCar.number_of_seats}</p>
@@ -163,7 +164,7 @@ const CarsPage = () => {
                                     filteredCars.map((car) => (
                                         <div key={car.id} className="car-card">
                                             <h3>{car.car_name} ({car.brand_name})</h3>
-                                            <img src={`http://127.0.0.1:8000${car.photo_url}?t=${new Date().getTime()}`} alt={`${car.car_name} photo`} />
+                                            <img src={`${config.API_BASE_URL.replace('/api', '')}${car.photo_url}?t=${new Date().getTime()}`} alt={`${car.car_name} photo`} />
                                             <p>Price per day: ${car.price_per_day}</p>
                                             <p>Fuel type: {car.fuel_type}</p>
                                             <p>Seats: {car.number_of_seats}</p>
