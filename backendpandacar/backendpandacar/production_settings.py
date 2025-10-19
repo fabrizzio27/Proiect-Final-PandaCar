@@ -1,0 +1,83 @@
+"""
+Production settings for backendpandacar project.
+"""
+
+from .settings import *
+import os
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-nad2nz^fsmf^+vcd=l9k5&&wj@3dcuu5@axa2fls3##pwa1p8^')
+
+# Allow all hosts for deployment
+ALLOWED_HOSTS = ['*']
+
+# CORS settings for production
+CORS_ALLOWED_ORIGINS = [
+    'https://your-frontend-domain.vercel.app',  # Replace with your actual frontend URL
+]
+
+# Update CORS settings for production
+CORS_ALLOW_CREDENTIALS = True
+
+# Database - Use environment variables for production
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'pandacar'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
+    }
+}
+
+# Static files settings for production
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Media files settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Security settings for production
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Update JWT settings for production
+SIMPLE_JWT.update({
+    "AUTH_COOKIE_DOMAIN": None,  # Will be set by the hosting platform
+    "AUTH_COOKIE_SECURE": True,  # HTTPS only in production
+    "AUTH_COOKIE_REFRESH_TOKEN_DOMAIN": None,
+    "AUTH_COOKIE_REFRESH_TOKEN_SECURE": True,
+})
+
+# CSRF settings for production
+CSRF_TRUSTED_ORIGINS = [
+    "https://your-frontend-domain.vercel.app",  # Replace with your actual frontend URL
+]
+
+# Logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'django.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
