@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import './AdminDashbord.css';
 import pandaIcon from '../Assets/panda3.png';
+import config from '../../config';
 
 const AdminDashbord = () => {
     const [data, setData] = useState({
@@ -144,7 +145,7 @@ const AdminDashbord = () => {
         setError(prev => ({ ...prev, [dataKey]: null }));
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/${endpoint}/`, {
+            const response = await fetch(`${config.API_BASE_URL}/${endpoint}/`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -192,7 +193,7 @@ const AdminDashbord = () => {
                 return;
             }
 
-            const response = await fetch('http://127.0.0.1:8000/api/users/create', {
+            const response = await fetch(`${config.API_BASE_URL}/users/create`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -242,7 +243,7 @@ const AdminDashbord = () => {
         setCreateSuccess(null);
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/cars/create', {
+            const response = await fetch(`${config.API_BASE_URL}/cars/create`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -294,7 +295,7 @@ const AdminDashbord = () => {
         setCreateSuccess(null);
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/availabilities/create', {
+            const response = await fetch(`${config.API_BASE_URL}/availabilities/create`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -330,7 +331,7 @@ const AdminDashbord = () => {
 
     const handleDeleteContent = async (contentType, id) => {
 
-        const url = `http://127.0.0.1:8000/api/${contentType}/${id}`;
+        const url = `${config.API_BASE_URL}/${contentType}/${id}`;
 
         try {
             const response = await fetch(url, {
@@ -378,7 +379,7 @@ const AdminDashbord = () => {
     const handleUpdateUser = async (e) => {
         e.preventDefault();
 
-        const response = await fetch(`http://127.0.0.1:8000/api/users/${updatedUser.id}`, {
+        const response = await fetch(`${config.API_BASE_URL}/users/${updatedUser.id}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {
@@ -400,7 +401,7 @@ const AdminDashbord = () => {
     const handleUpdateCar = async (e) => {
         e.preventDefault();
 
-        const response = await fetch(`http://127.0.0.1:8000/api/cars/${updatedCar.id}`, {
+        const response = await fetch(`${config.API_BASE_URL}/cars/${updatedCar.id}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {
@@ -422,7 +423,7 @@ const AdminDashbord = () => {
     const handleUpdateAvailability = async (e) => {
         e.preventDefault();
 
-        const response = await fetch(`http://127.0.0.1:8000/api/availabilities/${updateAvailability.id}`, {
+        const response = await fetch(`${config.API_BASE_URL}/availabilities/${updateAvailability.id}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {
@@ -665,7 +666,7 @@ const AdminDashbord = () => {
                                             ) : (
                                                 <div>
                                                     <h3>{car.car_name} ({car.brand_name})</h3>
-                                                    <img src={`http://127.0.0.1:8000${car.photo_url}`} alt={`${car.car_name} photo`} />
+                                                    <img src={`${config.API_BASE_URL.replace('/api', '')}${car.photo_url}`} alt={`${car.car_name} photo`} />
                                                     <p>Id: {car.id}</p>
                                                     <p>Image: {car.photo_name}</p>
                                                     <p>Price per day: ${car.price_per_day}</p>
