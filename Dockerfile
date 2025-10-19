@@ -19,4 +19,5 @@ RUN cd backendpandacar && python manage.py collectstatic --noinput
 EXPOSE $PORT
 
 # Start the application
-CMD cd backendpandacar && python manage.py migrate && gunicorn backendpandacar.wsgi:application --bind 0.0.0.0:$PORT
+WORKDIR /app/backendpandacar
+CMD python manage.py migrate && gunicorn backendpandacar.wsgi:application --bind 0.0.0.0:$PORT
