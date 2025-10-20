@@ -268,6 +268,11 @@ def my_account_details(request):
 @throttle_classes([ScopedRateThrottle])
 @authentication_classes([CustomAuthentication])
 def add_to_favorites(request, car_id):
+    logger.info(f"Add to favorites request - Car ID: {car_id}")
+    logger.info(f"User: {request.user}")
+    logger.info(f"Is authenticated: {request.user.is_authenticated}")
+    logger.info(f"Request headers: {dict(request.headers)}")
+    logger.info(f"Request cookies: {request.COOKIES}")
 
     view = add_to_favorites.view_class
     view.throttle_scope = 'custom_add_to_favorites'
@@ -276,16 +281,20 @@ def add_to_favorites(request, car_id):
     try:
         car = Car.objects.get(pk=car_id)
     except Car.DoesNotExist:
+        logger.error(f"Car not found: {car_id}")
         return Response({"error": "Car not found"}, status=status.HTTP_404_NOT_FOUND)
 
     user = request.user
+    logger.info(f"Processing for user: {user}")
 
     # Check if the car is already in the user's favorites
     if not UserFavoriteCar.objects.filter(user=user, car=car).exists():
         # Add the car to the user's favorites
         UserFavoriteCar.objects.create(user=user, car=car)
+        logger.info(f"Added {car.car_name} to favorites for user {user}")
         return Response({"message": f"{car.car_name} added to your favorites!"}, status=status.HTTP_201_CREATED)
     
+    logger.info(f"{car.car_name} already in favorites for user {user}")
     return Response({"message": f"{car.car_name} is already in your favorites!"}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])

@@ -77,7 +77,7 @@ const LoginForm = () => {
     setSuccessMessage("");
 
     const result = await login(email, password);
-    
+
     if (result.success) {
       setSuccessMessage("Login successful!");
       if (result.role === "admin") {
