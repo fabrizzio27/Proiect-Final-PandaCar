@@ -21,12 +21,13 @@ const Recommendations = () => {
 
         try {
             // Fetch and update recommendations via a single GET request
+            const token = localStorage.getItem('access_token');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
             const response = await fetch(`${config.API_BASE_URL}/recommended/`, {
                 method: 'GET',
                 credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers,
             });
 
             if (!response.ok) {
@@ -66,12 +67,13 @@ const Recommendations = () => {
 
     const handleAddToFav = async (car) => {
         try {
+            const token = localStorage.getItem('access_token');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
             const response = await fetch(`${config.API_BASE_URL}/favorites/add/${car.id}/`, {
                 method: 'POST',
                 credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers,
             });
 
             const data = await response.json();
@@ -107,12 +109,13 @@ const Recommendations = () => {
 
     const handleAddToCart = async (car) => {
         try {
-            const checkResponse = await fetch(`${config.API_BASE_URL}/availabilities`, {
+            const token = localStorage.getItem('access_token');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+            const checkResponse = await fetch(`${config.API_BASE_URL}/availabilities/`, {
                 method: 'GET',
                 credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers,
             });
 
             if (checkResponse.status === 404) {
@@ -152,9 +155,7 @@ const Recommendations = () => {
             const response = await fetch(`${config.API_BASE_URL}/cart/add/${car.id}/`, {
                 method: 'POST',
                 credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers,
             });
 
             const data = await response.json();

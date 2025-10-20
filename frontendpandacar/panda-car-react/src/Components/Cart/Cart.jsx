@@ -15,11 +15,12 @@ const Cart = () => {
         setError(null);
 
         try {
+            const token = localStorage.getItem('access_token');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
             const response = await fetch(`${config.API_BASE_URL}/cart/`, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers,
                 credentials: 'include',  // Ensure cookies are included with the request
             });
 
@@ -55,11 +56,12 @@ const Cart = () => {
     const handleRemoveFromCart = async (car) => {
         console.log('Removing car:', car);
         try {
+            const token = localStorage.getItem('access_token');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
             const response = await fetch(`${config.API_BASE_URL}/cart/remove/${car.id}/`, {
                 method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers,
                 credentials: 'include',  // Ensure cookies are included with the request
             });
 
