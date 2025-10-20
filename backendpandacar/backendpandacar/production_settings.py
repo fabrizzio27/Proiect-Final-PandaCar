@@ -49,9 +49,9 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # Update JWT settings for production
 SIMPLE_JWT.update({
     "AUTH_COOKIE_DOMAIN": None,  # Will be set by the hosting platform
-    "AUTH_COOKIE_SECURE": True,  # Required for SameSite=None on desktop browsers
+    "AUTH_COOKIE_SECURE": False,  # Temporarily relaxed for desktop compatibility
     "AUTH_COOKIE_REFRESH_TOKEN_DOMAIN": None,
-    "AUTH_COOKIE_REFRESH_TOKEN_SECURE": True,  # Required for SameSite=None on desktop browsers
+    "AUTH_COOKIE_REFRESH_TOKEN_SECURE": False,  # Temporarily relaxed for desktop compatibility
     "AUTH_COOKIE_SAMESITE": "None",  # Allow cross-site cookies for mobile/desktop
     "AUTH_COOKIE_REFRESH_TOKEN_SAMESITE": "None",  # Allow cross-site cookies for mobile/desktop
 })

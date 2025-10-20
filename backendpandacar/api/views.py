@@ -53,7 +53,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             value=data['access'],
             httponly=True,
             samesite='None',
-            secure=True,
+            secure=False,
             max_age=3600  # 1 hour
         )
 
@@ -62,7 +62,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             value=data['refresh'],
             httponly=True,
             samesite='None',
-            secure=True,
+            secure=False,
             max_age=604800  # 7 days
         )
 
