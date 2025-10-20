@@ -1,0 +1,16 @@
+[phases.setup]
+nixPkgs = ["python310", "python310Packages.pip"]
+
+[phases.install]
+cmds = [
+  "python -m pip install --upgrade pip",
+  "python -m pip install -r backendpandacar/requirements.txt"
+]
+
+[phases.build]
+cmds = [
+  "cd backendpandacar && python manage.py collectstatic --noinput"
+]
+
+[start]
+cmd = "bash -lc 'cd backendpandacar && python manage.py migrate && python populate_db.py && gunicorn backendpandacar.wsgi:application --bind 0.0.0.0:$PORT'"
