@@ -52,6 +52,8 @@ SIMPLE_JWT.update({
     "AUTH_COOKIE_SECURE": False,  # Temporarily disable for debugging
     "AUTH_COOKIE_REFRESH_TOKEN_DOMAIN": None,
     "AUTH_COOKIE_REFRESH_TOKEN_SECURE": False,  # Temporarily disable for debugging
+    "AUTH_COOKIE_SAMESITE": "None",  # Allow cross-site cookies for mobile
+    "AUTH_COOKIE_REFRESH_TOKEN_SAMESITE": "None",  # Allow cross-site cookies for mobile
 })
 
 # CSRF settings for production

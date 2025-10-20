@@ -53,7 +53,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             value=data['access'],
             httponly=True,
             samesite='None',
-            secure=True
+            secure=False,  # Temporarily disable for mobile debugging
+            max_age=3600  # 1 hour
         )
 
         response.set_cookie(
@@ -61,15 +62,16 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             value=data['refresh'],
             httponly=True,
             samesite='None',
-            secure=True
+            secure=False,  # Temporarily disable for mobile debugging
+            max_age=604800  # 7 days
         )
 
-        del response.data['access']
-        del response.data['refresh']
-
+        # Keep tokens in response for mobile compatibility
         response.data = {
             'message': 'Login successful',
-            'role': role,  
+            'role': role,
+            'access': data['access'],  # Include token for mobile
+            'refresh': data['refresh'],  # Include refresh token for mobile
         }
 
         return response
