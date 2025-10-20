@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/python:3.10.14-slim-bullseye
+FROM ghcr.io/library/python:3.10.14-slim-bullseye
 
 WORKDIR /app
 
