@@ -57,6 +57,12 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
+        
+        // Store token in localStorage for mobile compatibility
+        if (data.access) {
+          localStorage.setItem('access_token', data.access);
+        }
+        
         setUser(data);
         setIsAuthenticated(true);
         return { success: true, role: data.role };

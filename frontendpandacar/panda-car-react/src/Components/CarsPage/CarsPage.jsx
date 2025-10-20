@@ -68,12 +68,22 @@ const CarsPage = () => {
             
             console.log('Making request to:', `${config.API_BASE_URL}/cart/add/${car.id}/`);
             
+            // Get token from localStorage for mobile compatibility
+            const token = localStorage.getItem('access_token');
+            const headers = {
+                'Content-Type': 'application/json',
+            };
+            
+            // Add Authorization header if token exists (for mobile)
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+                console.log('Using Authorization header for mobile');
+            }
+            
             const response = await fetch(`${config.API_BASE_URL}/cart/add/${car.id}/`, {
                 method: 'POST',
                 credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: headers,
             });
 
             console.log('Response status:', response.status);
@@ -122,12 +132,22 @@ const CarsPage = () => {
             
             console.log('Making request to:', `${config.API_BASE_URL}/favorites/add/${car.id}/`);
             
+            // Get token from localStorage for mobile compatibility
+            const token = localStorage.getItem('access_token');
+            const headers = {
+                'Content-Type': 'application/json',
+            };
+            
+            // Add Authorization header if token exists (for mobile)
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+                console.log('Using Authorization header for mobile');
+            }
+            
             const response = await fetch(`${config.API_BASE_URL}/favorites/add/${car.id}/`, {
                 method: 'POST',
                 credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: headers,
             });
 
             console.log('Response status:', response.status);
